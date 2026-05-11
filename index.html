@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ontario Fishing Guides</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #0d1a12;
+      min-height: 100vh;
+      color: #e8dfc8;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #0d1a12 0%, #1a3320 50%, #0d1a12 100%);
+      border-bottom: 2px solid #2d5a35;
+      padding: 52px 24px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(45,106,79,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(181,69,27,0.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .header-icon { font-size: 48px; margin-bottom: 12px; }
+    .header h1 {
+      font-family: 'Georgia', serif;
+      font-size: clamp(24px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #c8e6c0;
+      margin: 0 0 10px;
+      text-shadow: 0 2px 20px rgba(45,106,79,0.4);
+    }
+    .header-sub {
+      font-size: 14px;
+      color: #8aad8a;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: sans-serif;
+      margin-bottom: 6px;
+    }
+    .header-desc {
+      font-size: 15px;
+      color: #6b8a6b;
+      max-width: 520px;
+      margin: 14px auto 0;
+      line-height: 1.7;
+      font-family: sans-serif;
+    }
+
+    /* ── Main ── */
+    .main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    .grid-label {
+      font-family: sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4a6a4a;
+      margin-bottom: 20px;
+    }
+
+    /* ── Fish card grid ── */
+    .fish-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+      margin-bottom: 48px;
+    }
+
+    .fish-card {
+      background: linear-gradient(135deg, #111e15 0%, #0d1a10 100%);
+      border-radius: 14px;
+      border: 1px solid #1e3a24;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.18s, border-color 0.18s;
+      display: flex;
+      flex-direction: column;
+    }
+    .fish-card.live:hover {
+      transform: translateY(-3px);
+      border-color: var(--card-color, #2d5a35);
+    }
+    .fish-card.live { cursor: pointer; }
+    .fish-card.soon { opacity: 0.45; cursor: default; }
+
+    .card-accent {
+      height: 3px;
+      background: var(--card-color, #2d5a35);
+    }
+    .card-body {
+      padding: 20px 20px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+    .card-icon {
+      font-size: 32px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .card-name {
+      font-family: sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #c8e6c0;
+      margin-bottom: 3px;
+      letter-spacing: 0.02em;
+    }
+    .card-latin {
+      font-family: 'Georgia', serif;
+      font-size: 12px;
+      color: #4a6a4a;
+      font-style: italic;
+    }
+    .card-desc {
+      font-family: sans-serif;
+      font-size: 13px;
+      color: #7a9a7a;
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 16px;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .card-difficulty {
+      font-family: sans-serif;
+      font-size: 11px;
+      color: #4a6a4a;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .card-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: opacity 0.18s;
+    }
+    .card-btn:hover { opacity: 0.85; }
+    .btn-live {
+      background: var(--card-color, #2d5a35);
+      color: #fff;
+    }
+    .btn-soon {
+      background: #1a2d1a;
+      color: #4a6a4a;
+      border: 1px solid #2d4a2d;
+      cursor: default;
+    }
+    .live-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(45,106,79,0.25);
+      border: 1px solid rgba(45,106,79,0.4);
+      border-radius: 20px;
+      font-family: sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #6aaa8a;
+      padding: 3px 9px;
+      text-transform: uppercase;
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      border-top: 1px solid #1e3a24;
+      padding: 24px 20px;
+      text-align: center;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: #3a5a3a;
+    }
+
+    @media (max-width: 480px) {
+      .fish-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-icon">🎣</div>
+    <h1>Ontario Fishing Guides</h1>
+    <p class="header-sub">Ontario Waters · Species by Species</p>
+    <p class="header-desc">Detailed fishing guides for Ontario's most sought-after species — from urban rivers to remote lakes. Locations, rigs, bait, and timing built for Ontario conditions.</p>
+  </div>
+
+  <main class="main">
+    <div class="grid-label">Choose a Species</div>
+    <div class="fish-grid" id="grid"></div>
+  </main>
+
+  <footer class="site-footer">Ontario Fishing Guides · Built for Ontario Waters</footer>
+
+  <script>
+    const fish = [
+      {
+        id: "carp",
+        icon: "🎣",
+        name: "Common Carp",
+        latin: "Cyprinus carpio",
+        color: "#7a5c1e",
+        desc: "Ontario's most underrated sport fish. Powerful fighters to 30+ lbs found in rivers, lakes, and harbours across the province — including right in downtown Toronto and Peterborough.",
+        difficulty: "Beginner friendly",
+        href: "carp-fishing-guide.html",
+        live: true,
+      },
+      {
+        id: "walleye",
+        icon: "🐟",
+        name: "Walleye",
+        latin: "Sander vitreus",
+        color: "#5a7a2a",
+        desc: "Ontario's most popular table fish and a fierce night-time predator. Found in rivers, the Great Lakes, and thousands of inland lakes across the province.",
+        difficulty: "Intermediate",
+        href: null,
+        live: false,
+      },
+      {
+        id: "pike",
+        icon: "🐊",
+        name: "Northern Pike",
+        latin: "Esox lucius",
+        color: "#2d6a4f",
+        desc: "Ambush predators lurking in weed beds and shallow bays. Ontario holds some of the largest pike in North America, with fish regularly exceeding 40 inches.",
+        difficulty: "Beginner friendly",
+        href: null,
+        live: false,
+      },
+      {
+        id: "muskie",
+        icon: "🦷",
+        name: "Muskellunge",
+        latin: "Esox masquinongy",
+        color: "#8b2222",
+        desc: "The fish of ten thousand casts — Ontario's apex freshwater predator. World-class muskie fishing on the Trent-Severn, Lake of the Woods, and Lake St. Clair.",
+        difficulty: "Advanced",
+        href: null,
+        live: false,
+      },
+      {
+        id: "largemouth",
+        icon: "🐠",
+        name: "Largemouth Bass",
+        latin: "Micropterus salmoides",
+        color: "#1a6b3a",
+        desc: "Ontario's most targeted warm-water species. Explosive topwater strikes in summer from weed-lined lakes and river backwaters across southern Ontario.",
+        difficulty: "Beginner friendly",
+        href: null,
+        live: false,
+      },
+      {
+        id: "smallmouth",
+        icon: "💪",
+        name: "Smallmouth Bass",
+        latin: "Micropterus dolomieu",
+        color: "#1a6b8a",
+        desc: "Pound-for-pound one of the hardest fighting fish in Ontario. Thrives in rocky rivers, clear-water lakes, and the Georgian Bay shoreline.",
+        difficulty: "Beginner friendly",
+        href: null,
+        live: false,
+      },
+      {
+        id: "rainbow",
+        icon: "🌊",
+        name: "Rainbow Trout / Steelhead",
+        latin: "Oncorhynchus mykiss",
+        color: "#7b2d8b",
+        desc: "Lake Ontario tributaries like the Credit, Humber, and Ganaraska host some of North America's best steelhead runs every spring and fall.",
+        difficulty: "Intermediate",
+        href: null,
+        live: false,
+      },
+      {
+        id: "laketrout",
+        icon: "❄️",
+        name: "Lake Trout",
+        latin: "Salvelinus namaycush",
+        color: "#1a4a8a",
+        desc: "Deep cold-water icons of the Canadian Shield. Georgian Bay, Lake Superior, and hundreds of northern Ontario lakes hold trophy lakers year-round.",
+        difficulty: "Intermediate",
+        href: null,
+        live: false,
+      },
+      {
+        id: "catfish",
+        icon: "🐱",
+        name: "Channel Catfish",
+        latin: "Ictalurus punctatus",
+        color: "#5c3a1a",
+        desc: "Powerful bottom-feeders that grow to 30+ lbs in the Grand River, Detroit River, and Lake Erie tributaries. Best targeted at night with cut bait.",
+        difficulty: "Beginner friendly",
+        href: null,
+        live: false,
+      },
+      {
+        id: "perch",
+        icon: "🟡",
+        name: "Yellow Perch",
+        latin: "Perca flavescens",
+        color: "#b5751b",
+        desc: "Ontario's favourite panfish and outstanding table fare. Lake Erie, Lake Simcoe, and Cook's Bay are famous for jumbo perch through the ice and in open water.",
+        difficulty: "Beginner friendly",
+        href: null,
+        live: false,
+      },
+    ];
+
+    const grid = document.getElementById("grid");
+    grid.innerHTML = fish.map(f => {
+      const btn = f.live
+        ? `<a class="card-btn btn-live" href="${f.href}" style="background:${f.color}">View Guide →</a>`
+        : `<span class="card-btn btn-soon">Coming Soon</span>`;
+
+      return `
+        <div class="fish-card ${f.live ? 'live' : 'soon'}" style="--card-color:${f.color}"
+             ${f.live ? `onclick="location.href='${f.href}'"` : ''}>
+          ${f.live ? '<span class="live-badge">Guide Live</span>' : ''}
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="card-icon">${f.icon}</div>
+              <div>
+                <div class="card-name">${f.name}</div>
+                <div class="card-latin">${f.latin}</div>
+              </div>
+            </div>
+            <p class="card-desc">${f.desc}</p>
+            <div class="card-footer">
+              <span class="card-difficulty">${f.difficulty}</span>
+              ${btn}
+            </div>
+          </div>
+        </div>`;
+    }).join("");
+  </script>
+</body>
+</html>

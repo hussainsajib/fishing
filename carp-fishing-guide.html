@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Carp Fishing Guide – Ontario Waters</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #0d1a12;
+      min-height: 100vh;
+      color: #e8dfc8;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #0d1a12 0%, #1a3320 50%, #0d1a12 100%);
+      border-bottom: 2px solid #2d5a35;
+      padding: 36px 24px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(45,106,79,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(181,69,27,0.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .header-icon { font-size: 42px; margin-bottom: 8px; }
+    .header h1 {
+      font-family: 'Georgia', serif;
+      font-size: clamp(22px, 5vw, 36px);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #c8e6c0;
+      margin: 0 0 8px;
+      text-shadow: 0 2px 20px rgba(45,106,79,0.4);
+    }
+    .header-sub {
+      font-size: 14px;
+      color: #8aad8a;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: sans-serif;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      display: flex;
+      overflow-x: auto;
+      background: #0a1510;
+      border-bottom: 1px solid #1e3a24;
+      padding: 0 8px;
+      gap: 2px;
+      scrollbar-width: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav-btn {
+      background: transparent;
+      color: #7a9c7a;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-family: sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      opacity: 0.7;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    .nav-btn.active {
+      color: #fff;
+      font-weight: 700;
+      opacity: 1;
+      border-bottom-color: rgba(255,255,255,0.3);
+    }
+
+    /* ── Content ── */
+    .content {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    /* ── Single-page layout ── */
+    .fish-section { padding-bottom: 16px; }
+    .section-break {
+      margin: 52px 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #2d5a35, transparent);
+    }
+    .back-link {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      font-family: sans-serif;
+      font-size: 11px;
+      color: #6b9a6b;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      z-index: 1;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #9ada9a; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .section-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #c8e6c0;
+      margin: 0 0 4px;
+      letter-spacing: 0.02em;
+    }
+    .section-intro {
+      font-family: sans-serif;
+      font-size: 13px;
+      color: #6b9a6b;
+      line-height: 1.5;
+    }
+    .divider {
+      height: 1px;
+      margin-bottom: 24px;
+    }
+
+    /* ── Tips ── */
+    .tips { display: flex; flex-direction: column; gap: 20px; }
+
+    .tip-card {
+      background: linear-gradient(135deg, #111e15 0%, #0d1a10 100%);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      border-left-width: 3px;
+      border-left-style: solid;
+      border-top: 1px solid;
+      border-right: 1px solid;
+      border-bottom: 1px solid;
+    }
+    .tip-body {
+      padding: 18px 20px 14px;
+      position: relative;
+    }
+    .tip-num {
+      position: absolute;
+      top: 16px; right: 16px;
+      font-family: sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0.6;
+      letter-spacing: 0.1em;
+    }
+    .tip-title {
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #d4edda;
+      margin: 0 0 8px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding-right: 36px;
+    }
+    .tip-detail {
+      font-family: Georgia, serif;
+      font-size: 14px;
+      color: #b0c8a8;
+      line-height: 1.75;
+    }
+    .tip-map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: #6aaa8a;
+      text-decoration: none;
+      border: 1px solid rgba(45,106,53,0.4);
+      border-radius: 20px;
+      padding: 5px 13px;
+      background: rgba(45,90,53,0.12);
+      transition: background 0.2s, color 0.2s;
+    }
+    .tip-map-link:hover {
+      background: rgba(45,90,53,0.3);
+      color: #9ada9a;
+    }
+
+    /* Image strip */
+    .tip-images {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px 16px;
+      flex-wrap: wrap;
+    }
+    .tip-img {
+      flex: 1 1 120px;
+      max-width: 220px;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: #0d1a10;
+      display: block;
+    }
+    @media (max-width: 480px) {
+      .tip-img { min-width: 90px; }
+    }
+
+    /* ── YouTube embed ── */
+    .video-section {
+      margin-top: 28px;
+      background: #0d1f12;
+      border: 1px solid #2d5a35;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .video-section-header {
+      padding: 13px 18px;
+      font-family: sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6b9a6b;
+      border-bottom: 1px solid #1e3a24;
+    }
+    .video-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 16px;
+    }
+    .video-thumb {
+      flex: 1 1 240px;
+      max-width: 380px;
+      text-decoration: none;
+      display: block;
+      cursor: pointer;
+    }
+    .video-thumb:hover .video-img-wrap { opacity: 0.85; }
+    .video-thumb:hover .play-btn { transform: translate(-50%,-50%) scale(1.12); }
+    .video-label {
+      font-family: sans-serif;
+      font-size: 11px;
+      color: #8aad8a;
+      margin-bottom: 6px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .video-img-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0a1510;
+      transition: opacity 0.2s;
+    }
+    .video-img-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 52px; height: 52px;
+      background: rgba(255,0,0,0.88);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.18s;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.5);
+    }
+    .play-btn svg { margin-left: 4px; }
+    .video-title-bar {
+      margin-top: 7px;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: #c8e6c0;
+      line-height: 1.4;
+    }
+    .yt-badge {
+      display: inline-block;
+      font-size: 10px;
+      background: #ff0000;
+      color: #fff;
+      border-radius: 3px;
+      padding: 1px 5px;
+      margin-right: 5px;
+      font-weight: 700;
+      vertical-align: middle;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Extra panels ── */
+    .extra-panel {
+      margin-top: 24px;
+      background: #0d1f12;
+      border: 1px solid #2d5a35;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .extra-panel h4 {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: #6b9a6b;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 0 14px;
+    }
+    .temp-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .temp-card { border-radius: 8px; padding: 12px 16px; flex: 1 1 160px; }
+    .temp-label { font-family: sans-serif; font-size: 11px; color: #8aad8a; font-weight: 700; margin-bottom: 4px; }
+    .temp-baits { font-family: Georgia, serif; font-size: 13px; color: #c8ddb0; }
+    .season-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; }
+    .season-name { font-family: sans-serif; font-size: 13px; color: #c8e6c0; width: 180px; flex-shrink: 0; }
+    .rating-bars { display: flex; gap: 4px; }
+    .bar { width: 18px; height: 8px; border-radius: 3px; }
+    .bar.on  { background: #b5451b; }
+    .bar.off { background: #1e3a24; }
+    .season-note { font-family: sans-serif; font-size: 12px; color: #6b9a6b; }
+    .checklist { display: flex; flex-wrap: wrap; gap: 8px; }
+    .check-pill {
+      background: #1a2d1a; border: 1px solid #2d5a35; border-radius: 20px;
+      padding: 6px 14px; font-family: sans-serif; font-size: 12px; color: #a0c8a0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <a class="back-link" href="index.html">← All Fish Guides</a>
+    <div class="header-icon">🎣</div>
+    <h1>Complete Carp Fishing Guide</h1>
+    <p class="header-sub">Ontario Waters · From Setup to Strike</p>
+  </div>
+
+  <nav class="nav" id="nav"></nav>
+  <div class="content" id="content"></div>
+
+  <script>
+    const sections = [
+      {
+        id: "location", icon: "🗺️", label: "Reading the Water", color: "#2d6a4f",
+        intro: "Finding carp before you cast is 80% of the battle. Carp are creatures of habit — they patrol the same routes and feed in the same spots day after day.",
+        videos: [
+          { id: "o_CSyXnVMfc", label: "Fishing Masterclass: How to Read the Water & Find Fish" },
+          { id: "XL5A7-LAlfQ", label: "How to Catch Carp – Locate, Bait & Rig" },
+        ],
+        tips: [
+          { title: "Look for surface signs",
+            detail: "Watch for carp 'rolling' at the surface — they arch their backs and splash as they dive. This is most common at dawn and dusk. Bubbles rising from the bottom in clusters ('fizzing') mean carp are rooting in the silt below.",
+            imgs: ["carp fish rolling surface water","fishing bubbles lake surface","carp jumping water"] },
+          { title: "Find the features",
+            detail: "Carp love structure. Target lily pad edges, overhanging trees, sunken branches, reed beds, channel margins, and any change in depth. In rivers, look for eddies behind bridge pillars or bends where flow slows.",
+            imgs: ["lily pads lake fishing","reeds river bank nature","overhanging trees lake water"] },
+          { title: "Marginal shelves",
+            detail: "In lakes, the 'shelf' — where shallow water drops into depth — is a prime patrol route. Walk the bank slowly and look into the water for this depth change. It's often 1–5m from shore.",
+            imgs: ["lake bank shallow depth fishing","lake shore margin angler","clear lake shallow water bottom"] },
+          { title: "Coloured water",
+            detail: "Slightly murky, brown-tinged water often signals carp have been feeding nearby, disturbing bottom silt. Follow the colour.",
+            imgs: ["murky brown lake river water","silt disturbed bottom water","turbid muddy water lake"] },
+          { title: "Wind direction",
+            detail: "Carp follow wind-blown food. In a lake, fish the bank the wind is blowing INTO, especially after several hours of consistent wind. The windward bank concentrates natural food and warms the water slightly.",
+            imgs: ["windy lake ripple waves","lake wind waves fishing","fisherman windy bank lake"] },
+          { title: "Shallow warm bays",
+            detail: "In spring and early summer, carp seek out the warmest, shallowest bays — especially those with dark silty bottoms that absorb heat. On sunny mornings, scan these areas first.",
+            imgs: ["shallow lake bay sunny warm","spring lake bay nature","warm shallow water green vegetation"] },
+        ]
+      },
+      {
+        id: "timing", icon: "🕐", label: "Best Times", color: "#b5451b",
+        intro: "Carp are temperature-driven. Their feeding activity follows a predictable daily and seasonal rhythm once you understand it.",
+        videos: [
+          { id: "bLlJmF49Oog", label: "Best Time of Day to Catch Carp" },
+          { id: "nIA6FwWsouM", label: "Best Spring Tactics to Catch Carp" },
+        ],
+        extra: "seasons",
+        tips: [
+          { title: "Dawn & dusk are prime",
+            detail: "The 1–2 hours around sunrise and sunset are consistently the most productive. Light levels are low, the water is quieter, and carp move into shallower margins to feed. In summer, this is critical — midday sun pushes them deep.",
+            imgs: ["sunrise lake mist fishing dawn","sunset lake fishing silhouette","foggy morning river fishing"] },
+          { title: "Overnight sessions",
+            detail: "In warm months (June–September), carp feed heavily through the night, especially midnight to 3am. If overnight fishing is permitted, these are the most productive hours on pressured lakes.",
+            imgs: ["night fishing lake dark stars","bivvy tent camp fishing night","night angler lake rod glowing"] },
+          { title: "Season guide",
+            detail: "Spring (May–June): Excellent as water warms and carp feed aggressively after winter. Summer (July–Aug): Early morning and night only. Autumn (Sept–Oct): Second best season — carp bulk up before winter. Winter: Slow but possible on warm spells above 10°C.",
+            imgs: ["spring lake fishing green warm","autumn fall lake fishing colours","winter lake fishing ice cold"] },
+          { title: "After rain",
+            detail: "A warm rain that raises water temperature slightly triggers feeding. Fish the 24–48 hours after a summer rain event.",
+            imgs: ["rain drops lake surface water","fishing after rain river","summer rain lake ripple"] },
+          { title: "Overcast days",
+            detail: "Cloud cover keeps light levels low all day, which means carp can feed throughout rather than just dawn/dusk. Grey days in summer are often the best all-day sessions.",
+            imgs: ["overcast grey sky lake fishing","cloudy day calm lake water","dull grey fishing day lake"] },
+          { title: "Avoid bright cold fronts",
+            detail: "A sharp cold front dropping temperature 5°C+ will kill feeding for 24–72 hours. Check the forecast — stable, mild conditions beat extreme weather every time.",
+            imgs: ["cold front storm approaching lake","dramatic weather lake clouds","weather forecast thermometer cold"] },
+        ]
+      },
+      {
+        id: "tackle", icon: "🎣", label: "Rod & Reel Setup", color: "#4a4e69",
+        intro: "You don't need the most expensive gear, but the right setup makes landing a big fish dramatically more likely. Carp can run hard and fast — your tackle must handle it.",
+        videos: [
+          { id: "t2pv64sLFGY", label: "Starting Carp Fishing – How to Set Up a Carp Rod" },
+          { id: "emwMS_tJYBY", label: "How to Set Up a Carp Fishing Rod (Best Way)" },
+        ],
+        extra: "checklist",
+        tips: [
+          { title: "Rod: 10–13ft, 2–3lb test curve",
+            detail: "A dedicated carp rod in the 12ft / 2.75lb test curve range is ideal for Ontario waters. It casts ledger rigs far enough, absorbs runs, and has the backbone to turn a fish. Popular budget options: Daiwa Black Widow, Sonik SK-TEK. Avoid generic spinning rods — they lack the spine.",
+            imgs: ["fishing rod long carp","fishing rod blank close up rings","fishing rods leaning bank"] },
+          { title: "Reel: Baitrunner / freespool",
+            detail: "A baitrunner reel (Shimano Baitrunner, Daiwa Emblem) is essential for carp. It lets line run freely when a carp takes the bait, preventing it from pulling the rod in. 4000–6000 size. Pre-load with ~200m of line.",
+            imgs: ["fishing reel close up spool","spinning reel silver fishing","fishing reel handle close"] },
+          { title: "Main line: 15–18lb monofilament or braid",
+            detail: "15lb mono is the beginner's choice — forgiving and easy to manage. Experienced anglers use 20–30lb braid for sensitivity and strength. Avoid line under 12lb — big Ontario carp regularly hit 15–25lbs and will snap lighter line in weeds.",
+            imgs: ["fishing monofilament line spool clear","braid fishing line dark","fishing line close up green"] },
+          { title: "Leader / shock leader",
+            detail: "Tie a 1m leader of 20–25lb fluorocarbon between your main line and rig. Fluoro sinks, is nearly invisible, and resists abrasion against rocks and mussels — critical on Lake Ontario rocky margins.",
+            imgs: ["fluorocarbon clear fishing line leader","fishing knot connection line","transparent fishing line water"] },
+          { title: "Rod pod or bank sticks",
+            detail: "Use two rods on bank sticks or a rod pod. Never hold the rod while waiting — carp runs happen instantly and you'll lose it. A bite alarm (e.g. Delkim, Fox) is standard; even a cheap bell clip works.",
+            imgs: ["fishing rod pod bank sticks setup","bite alarm electronic carp","two fishing rods lake bank setup"] },
+          { title: "Landing net",
+            detail: "At minimum a 42-inch (107cm) round net. Carp are powerful and wide — an undersized net causes panic, hook pulls, and fish damage. A large net makes landing clean and safe.",
+            imgs: ["large landing net fishing green","carp fish large net bank","fishing net scooping fish"] },
+        ]
+      },
+      {
+        id: "rigs", icon: "🔗", label: "Rigs & Hooks", color: "#7b2d8b",
+        intro: "A carp rig is the short terminal setup between your leader and your bait. The right rig presents bait naturally and hooks the fish reliably — even when it tries to eject it.",
+        videos: [
+          { id: "xOeGDu3goMU", label: "How to Tie a Knotless Knot / Hair Rig" },
+          { id: "tXjMcKVK9kk", label: "How to Tie a Hair Rig – Trakker Carp Tips" },
+        ],
+        tips: [
+          { title: "The Hair Rig (essential)",
+            detail: "The #1 carp rig worldwide. A short loop of 4–6lb braid ('the hair') extends below the hook, holding the bait off the hook bend. When the carp sucks in the bait, the hook turns and catches in the lip. Tie an overhand loop, thread bait onto a baiting needle, secure with a 'boilie stop' or piece of twig. Hook size: 4–8 depending on bait size.",
+            imgs: ["fishing hook close up sharp","hair rig baited corn hook","carp rig bait presentation"] },
+          { title: "Lead / sinker weight",
+            detail: "Use a 1.5–3oz inline lead or running lead on your leader. The weight must be heavy enough to set the hook when the carp runs — this is called 'bolt rig' mechanics. Too light and the hook won't set. In flowing water, use 2.5–4oz to hold bottom.",
+            imgs: ["fishing lead sinker weight","inline lead carp fishing","fishing weight sinker heavy"] },
+          { title: "Hook choice",
+            detail: "Chemically sharpened carp hooks only. Patterns: Gardner Mugga, Fox Armapoint, Nash Fang. Size 6 for boilies (15–18mm), Size 8 for corn or smaller baits, Size 4 for large bread/paste. Check sharpness before every cast — drag the point across your thumbnail; it should catch immediately.",
+            imgs: ["fishing hooks sharp assortment","carp hook close up barb","fishing hook size comparison"] },
+          { title: "The Knotless Knot",
+            detail: "The standard hair rig knot. Pass line through hook eye (from front), hold the hair extension alongside the shank, wrap the line 8 times down the shank toward the bend, then pass back through the eye. No additional knot needed. YouTube 'knotless knot' — it takes 5 minutes to learn and lasts a lifetime.",
+            imgs: ["fishing knot tying hands","line wrapped hook shank knot","close up fishing rig knot hand"] },
+          { title: "Hook link material",
+            detail: "For the hooklink (20–30cm between hook and lead), use 15–25lb coated braid or stiff fluorocarbon. Stiff fluoro keeps the rig tangle-free on the cast. Coated braid is more supple and works better over silt. Avoid mono hooklinks — they're too springy and reduce hook-ups.",
+            imgs: ["coated braid fishing line","fluorocarbon stiff hooklink fishing","fishing rig hooklink close up"] },
+          { title: "PVA bags & mesh",
+            detail: "Stuff a small PVA mesh bag with pellets, crumbled boilies, or crushed corn and attach to your hook before casting. It dissolves on contact with water, depositing a tiny pile of bait right next to your hook — deadly for accuracy and initial attraction.",
+            imgs: ["PVA mesh bag carp bait pellets","PVA stick fishing dissolve","carp fishing bait bag hooklink"] },
+        ]
+      },
+      {
+        id: "bait", icon: "🌽", label: "Bait Preparation", color: "#c77b3a",
+        intro: "Bait selection and preparation separates casual catches from consistent results. Carp have an excellent sense of smell and taste. Your bait must stand out.",
+        videos: [
+          { id: "VNxqm6IGp8M", label: "How to Prepare Tiger Nuts for Carp Fishing" },
+          { id: "Tsk9RJXTZjo", label: "Simple Homemade Boilies & Popups for Carp" },
+        ],
+        extra: "baittemp",
+        tips: [
+          { title: "Sweetcorn (best beginner bait)",
+            detail: "Canned corn straight from the tin works immediately. For better results: drain a tin, add 2 tsp sugar + 1 tsp vanilla extract, seal and refrigerate overnight. Thread 2–3 grains on the hair. Corn is highly visible, sweet-smelling, and carp adore it. Also use it as free offerings around your hook.",
+            imgs: ["sweet corn yellow kernels bright","canned corn tin open","corn grains food close up"] },
+          { title: "Boilies (tournament standard)",
+            detail: "Boilies are round, boiled paste baits (14–20mm) that resist small fish and only carp can properly consume. Buy ready-mades or roll your own. Recommended flavours for Ontario: Mainline Cell, Sticky Baits Manilla, Nash Scopex Squid. Soak overnight in the matching liquid attractant for maximum leakage.",
+            imgs: ["round dough balls bait fishing","colourful round fishing boilies","rolling paste balls bait"] },
+          { title: "Bread (underrated)",
+            detail: "Fresh white bread pinched onto a size 6 hook as a paste works brilliantly in rivers and canals. The cloud of bread particles attracts carp from distance. Crust floated on the surface ('floater fishing') is deadly in warm weather when carp cruise the surface.",
+            imgs: ["white bread sliced loaf","bread floating water surface","bread crust torn piece white"] },
+          { title: "Tiger nuts",
+            detail: "A cult carp bait. Buy raw dried tiger nuts, soak in water 24hrs, then boil 30 mins until slightly soft. They ferment slightly, producing a sweet caramel smell carp find irresistible. Prepare extra and freeze in batches.",
+            imgs: ["tiger nuts dried raw food","soaking nuts water bowl overnight","boiling pot stove cooking nuts"] },
+          { title: "Spod mix / free offerings",
+            detail: "Pre-baiting the swim with loose offerings triggers competitive feeding. Mix: 2 tins sweetcorn + a handful of micro pellets (4mm carp pellets) + crushed boilies + hemp seed (hemp is a carp magnet — buy ready-cooked). Introduce 1–2 spods or 20–30 throws before casting your rig into the same spot.",
+            imgs: ["mixed bait pellets fishing bucket","hemp seeds dark fishing bait","groundbait mix bowl fishing bait"] },
+          { title: "Flavour boosters & dips",
+            detail: "Soak your hookbait in a matching flavour dip or liquid food for 30–60 minutes before fishing. For corn: Scopex flavour or Monster Crab liquid. For boilies: matching boilie dip or pure salmon oil. In cold water (below 12°C), switch to more pungent savoury flavours — cheese, fishmeal, shrimp.",
+            imgs: ["liquid fish oil bottle food","flavour essence bottle fishing","marinating bait liquid bowl"] },
+        ]
+      },
+      {
+        id: "locations", icon: "📍", label: "Target Locations", color: "#7a5c1e",
+        intro: "Ontario holds some of North America's finest carp waters. Organised by drive time from Toronto — from city-limit spots you can fish after work to destination venues worth the journey.",
+        videos: [],
+        tips: [
+          { title: "Humber Bay Park East & Tommy Thompson Park (Toronto — 0–30 min)",
+            detail: "The Humber River mouth at Humber Bay Park East is one of the most accessible carp venues in Ontario. Carp stack up along the rip-rap shoreline, around marina breakwalls, and in the weedy shallows off the spit. Tommy Thompson Park (Leslie Street Spit) adds miles of quiet lagoon-edge fishing with almost no pressure. Fish margins at dawn with sweetcorn or boilies.",
+            map: "https://www.google.com/maps/search/?api=1&query=Humber+Bay+Park+East+Toronto+Ontario",
+            imgs: ["toronto waterfront lake ontario fishing","humber bay park shoreline lake","breakwall riprap fishing lake ontario"] },
+          { title: "Don River & Ashbridges Bay (Toronto — 0–20 min)",
+            detail: "The lower Don River and its outlet at Ashbridges Bay is a productive urban carp fishery. Carp exceeding 2 feet are regularly caught from the river banks in Don Valley Park, particularly around the bends near Pottery Road and the Corktown Common area. The bay margins hold fish in the weed throughout summer. The Don Valley trail gives easy bank access along the whole stretch.",
+            map: "https://www.google.com/maps/search/?api=1&query=Corktown+Common+Don+River+Toronto+Ontario",
+            imgs: ["don river toronto fishing urban","river bend urban fishing city","ashbridges bay toronto lake fishing"] },
+          { title: "Credit River – Streetsville to Port Credit (Mississauga — 30 min)",
+            detail: "The lower Credit River holds a dense carp population year-round. Target the slower bends and deeper pools between Streetsville and the lake outlet at Port Credit. Bread paste and corn are deadly here. After heavy rain, carp push into shallower runs — wade quietly and sight-fish. Parking at Erindale Park or Riverside Park in Streetsville.",
+            map: "https://www.google.com/maps/search/?api=1&query=Erindale+Park+Credit+River+Mississauga+Ontario",
+            imgs: ["credit river mississauga fishing","river bend deep pool fishing","river carp fishing shallow run"] },
+          { title: "Holland River – East Gwillimbury & Cook's Bay (45 min north)",
+            detail: "The Holland River flowing through East Gwillimbury into the southern end of Lake Simcoe holds some of the biggest carp in the province. The slow, silty river channel and the shallow Cook's Bay area warm early in spring. Access the river from the Holland River Marina or fish the lake margins along Georgina Island Road. Chumming with corn the evening before is highly recommended here.",
+            map: "https://www.google.com/maps/search/?api=1&query=Holland+River+East+Gwillimbury+Ontario",
+            imgs: ["holland river ontario fishing","cook bay lake simcoe shallow fishing","slow silty river fishing ontario"] },
+          { title: "Speed River – Guelph (1 hr west)",
+            detail: "The Speed River running through Guelph holds a healthy carp population in its deeper pools and under road bridges. Access from Riverside Park or the Hanlon Creek trail. The stretch near Stone Road and downstream toward Cambridge — where the Speed meets the Grand — is particularly productive. Fish the slack water behind bridge pillars with boilies or corn.",
+            map: "https://www.google.com/maps/search/?api=1&query=Riverside+Park+Speed+River+Guelph+Ontario",
+            imgs: ["speed river guelph ontario fishing","river bridge pool deep fishing","guelph ontario river park nature"] },
+          { title: "Hamilton Harbour & Cootes Paradise (1 hr)",
+            detail: "Hamilton Harbour offers easy shore fishing from the Bayfront Park seawall, with carp cruising warm shallow margins throughout summer. Cootes Paradise marsh (west end) is exceptional in spring — shallow dark-bottomed bays warm early and hold large carp that are often visible. Access via RBG Cootes Drive or the Desjardins Canal trail. Quiet approach is essential in the clear marsh water.",
+            map: "https://www.google.com/maps/search/?api=1&query=Bayfront+Park+Hamilton+Harbour+Ontario",
+            imgs: ["hamilton harbour waterfront fishing ontario","marsh bay shallow warm water fishing","cootes paradise nature ontario water"] },
+          { title: "Niagara River – Fort Erie & Queenston (1.5 hrs)",
+            detail: "The Niagara River holds large carp in the slack water eddies behind bridge pillars and in the calmer sections downstream of Fort Erie. Mather Arch Park and the Peace Bridge area in Fort Erie are the best access points. Use heavier 2.5–4oz leads to hold bottom in the current. The calmer upper river above the Falls near Queenston is easier for beginners.",
+            map: "https://www.google.com/maps/search/?api=1&query=Mather+Arch+Park+Fort+Erie+Niagara+River+Ontario",
+            imgs: ["niagara river fort erie fishing","river bank strong current fishing","niagara river ontario bank fishing"] },
+          { title: "Welland Recreational Canal (1.5 hrs southwest)",
+            detail: "The Welland Recreational Canal runs parallel to the main ship canal and offers calm, deep water with consistent carp throughout. Multiple access points in Welland and Port Colborne make it easy. Steady depth, minimal current, and weedy margins make it a forgiving venue. Pre-baiting a swim with corn, hemp, and pellets works well. A Niagara Peninsula Conservation Authority permit is required.",
+            map: "https://www.google.com/maps/search/?api=1&query=Welland+Recreational+Canal+Welland+Ontario",
+            imgs: ["welland canal ontario fishing calm water","straight canal bank fishing deep","canal fishing rod setup bank sticks"] },
+          { title: "Grand River – Paris & Brantford (1.5 hrs)",
+            detail: "The Grand River is arguably Ontario's most productive carp river. The stretch between Paris and Brantford has deep gravel runs, weir pools, and miles of marginal slack water. The Brantford Lions Park weir pool is a known hotspot — large commons and mirrors to 20+ lbs are common. Use a swimfeeder or spod mix on the gravel runs. Parking at Conservation Authority access points throughout.",
+            map: "https://www.google.com/maps/search/?api=1&query=Lions+Park+Grand+River+Brantford+Ontario",
+            imgs: ["grand river brantford fishing ontario","weir pool river carp fishing","river gravel run fishing ontario"] },
+          { title: "Earl Rowe Provincial Park – Boyne River & Earl Rowe Lake (1.5 hrs north)",
+            detail: "Ontario Parks officially lists carp among the species in the Boyne River watershed that runs through Earl Rowe Provincial Park near Angus. Anglers report 'loads of small carp spawning in the lake' during spring. The park's lake and the Boyne River below the dam both hold fish alongside pike, trout, and bass. Day-use fishing is permitted with a valid Ontario licence — a peaceful, uncrowded spot that most carp anglers overlook entirely.",
+            map: "https://www.google.com/maps/search/?api=1&query=Earl+Rowe+Provincial+Park+Angus+Ontario",
+            imgs: ["provincial park lake fishing calm","boyne river ontario fishing bank","small lake dam fishing ontario park"] },
+          { title: "Lake Scugog – Port Perry (1.5–2 hrs northeast)",
+            detail: "Lake Scugog is one of Ontario's best-documented carp fisheries. The carp population — which originated from a fish farm dike collapse — has thrived in the shallow, silty, vegetation-rich basin and fish regularly grow to 3ft into the mid- to high-20 lb range. Fish'n Canada filmed a dedicated carp episode here. Named spots around the lake:<br><br>• <strong>Sunset Haven</strong> (east shore, near Blue Heron Casino) — the best-known carp swim: a large clean-bottomed flat fished from bank or boat. Lawrence Bendandi rents accommodation here specifically for carp anglers — pre-bait the flat with corn and hemp the evening before (sunsethaven.ca).<br>• <strong>Caesarea public dock</strong> (east shore) — one of the best free bank-access points; gravel-to-silt bottom transition nearby holds fish.<br>• <strong>Hwy 7A Causeways</strong> — both the Port Perry Causeway and Cartwright Causeway cross the lake and are fishable from the roadside; the Port Perry Causeway borders the Osler Marsh on the north side.<br>• <strong>Palmer Park &amp; Waterfront Trail</strong> (Port Perry town centre) — public shore access from Casmir St, Mary St, and Queen St ends; quieter option right in town.<br>• <strong>Nonquon River mouth</strong> (near Seagrave, northwest shore) — the lake's main inflow; warm silty shallows and a classic spring carp staging area.<br>• <strong>Western shoreline north of Port Perry</strong> — large floating weed mats pushed by wind in summer; prime holding water, mainly boat access.",
+            map: "https://www.google.com/maps/search/?api=1&query=Lake+Scugog+Port+Perry+Ontario",
+            imgs: ["lake scugog ontario fishing boat","shallow weedy lake ontario fishing","port perry ontario lake water"] },
+          { title: "Del Crary Park – Little Lake, Peterborough (2 hrs northeast)",
+            detail: "Fish'n Canada and Outdoor Canada both call Peterborough a genuine <strong>carp Mecca</strong> — European anglers make the trip specifically for this water. Little Lake is shallow (6–10 ft), warm, and described as 'virtually laden with carp.' Outdoor Canada documented <strong>20 lb+ fish caught every 30–45 minutes</strong> on an August session — and the guides said it was a below-average day. Del Crary Park on the west/south shore is the best-known swim: flat paved bank next to the marina and Otonabee River inflow. The T-wharf stretch on Crescent St (near the old Holiday Inn) is a named hotspot. Use a hair rig with boilies or yellow corn — <strong>yellow bait is specifically recommended</strong> for this water. Pre-bait with groundbait before your session. Local guide <strong>Will Muschett (Peterborough Carping Guides)</strong> runs dedicated day sessions here.",
+            map: "https://www.google.com/maps/search/?api=1&query=Del+Crary+Park+Peterborough+Ontario",
+            imgs: ["del crary park peterborough waterfront","little lake peterborough ontario fishing","hair rig boilies carp fishing setup"] },
+          { title: "Rogers Cove – Little Lake, Peterborough (2 hrs northeast)",
+            detail: "Rogers Cove Park (131 Maria St) sits on the <strong>north shore of Little Lake</strong>, directly across from the Del Crary marina. Same carp-dense water, but noticeably quieter. The supervised swimming beach gives a gently shelving, shallow shoreline — exactly the kind of margin carp move into at dawn and dusk to feed. The Trans-Canada Trail runs the full length of the north bank, making this an ideal venue for a mobile stalking session — walk the shore, spot fish, then present a bait. Mark Street Boat Launch is immediately adjacent if you want to combine boat and bank fishing. Large free car park on site.",
+            map: "https://www.google.com/maps/search/?api=1&query=Rogers+Cove+Park+Peterborough+Ontario",
+            imgs: ["rogers cove peterborough lake ontario","shallow lake beach shore fishing","north shore lake carp stalking fishing"] },
+          { title: "Lock 20 – Ashburnham, Peterborough (2 hrs northeast)",
+            detail: "Lock 20 (175 Maria St) sits at the <strong>northeast corner of Little Lake</strong> where it connects to the Trent-Severn canal. A Parks Canada facility with picnic tables, a Trans-Canada Trail connection, and a quiet atmosphere well away from marina traffic. The lock pool and the still, channelled canal cut are directly connected to carp-loaded Little Lake — no specific catch reports are published here, but the deep, sheltered lock pool is textbook carp holding water. Shore fishing is permitted with a valid Ontario licence. The same hair rig and boilie tactics used at Del Crary apply; the calmer water means a lighter lead is fine.",
+            map: "https://www.google.com/maps/search/?api=1&query=Lock+20+Ashburnham+Trent+Severn+Peterborough+Ontario",
+            imgs: ["trent severn lock canal fishing ontario","lock pool canal fishing quiet","peterborough lock waterway fishing"] },
+          { title: "McNamara Park – Otonabee River, Peterborough (2 hrs northeast)",
+            detail: "McNamara Park (McNamara Dr, south Peterborough) sits on the <strong>Otonabee River</strong> — not Little Lake — so different tactics are needed. The Otonabee through Peterborough is one of expert Len Perdic's top-rated carp stretches in the entire Trent-Severn Waterway, with Fish'n Canada documenting 'bite alarms screaming throughout the day' at a city-centre session nearby. Fish the shallow margins at dawn and dusk; mid-day fish retreat to deeper holes — target those with a longer cast. Use a <strong>flat 1oz+ lead</strong> to hold bottom in the gentle current rather than an inline ball lead. The park was co-developed with OFAH specifically as a fishing-access and conservation-education site, so bank access and signage are good.",
+            map: "https://www.google.com/maps/search/?api=1&query=McNamara+Park+Peterborough+Ontario",
+            imgs: ["otonabee river peterborough fishing bank","river carp fishing flat lead current","peterborough riverside park fishing ontario"] },
+          { title: "Jackson Creek – Peterborough: Verdict (2 hrs northeast)",
+            detail: "<strong>Not recommended as a dedicated carp target.</strong> Jackson Creek flows through Peterborough and enters Little Lake at Del Crary Park, but the evidence is clear: FishBrain logs 7 catches from the creek (rock bass, creek chub, smallmouth, muskie — no carp). FishAngler lists creek chub, sculpin, and white sucker as the dominant species. No Ontario fishing forum, Fish'n Canada article, or iNaturalist record documents a carp caught in the creek. The reason is physical — the creek is <strong>small and shallow</strong> (riffles and modest pools averaging under 1 m), <strong>mostly culverted underground</strong> through downtown Peterborough, and had a hydrocarbon spill in the lower urban section in 2022. In dry summers the upper section can nearly dry out entirely. The only section with any open bank access is the <strong>Jackson Creek Kiwanis Trail</strong> (Jackson Park to Ackison Rd, 4.5 km) — worth walking for smallmouth and bass, but not carp. The one exception: at spring high water, carp from Little Lake could theoretically push a short distance into the creek mouth at Del Crary Park — but you would effectively just be fishing the edge of Little Lake. Fish the lake instead.",
+            map: "https://www.google.com/maps/search/?api=1&query=Jackson+Creek+Kiwanis+Trail+Peterborough+Ontario",
+            imgs: ["small creek urban peterborough fishing","jackson creek peterborough trail nature","creek smallmouth bass fishing shallow"] },
+          { title: "Bay of Quinte – Belleville & Deseronto (2.5 hrs east)",
+            detail: "The Bay of Quinte is a long sheltered bay off Lake Ontario ranking among the top carp waters in the province. The narrows between Belleville and Deseronto concentrate fish — target weed beds and soft silty margins on either side. Access from Zwicks Centennial Park in Belleville or along Hwy 49 near Deseronto. Consistent doubles and a genuine chance at 20+ lb fish.",
+            map: "https://www.google.com/maps/search/?api=1&query=Zwicks+Centennial+Park+Belleville+Ontario",
+            imgs: ["bay of quinte ontario fishing","belleville ontario waterfront lake","sheltered bay fishing lake ontario weed"] },
+          { title: "Rice Lake – Bewdley & Harwood (2 hrs northeast)",
+            detail: "Rice Lake north of Cobourg is renowned for large common carp in the 15–25 lb range. The weedy north shore around Harwood and the reed-lined bays near Bewdley are prime spots. Boat access opens up the best areas, but shore fishing from public launches is productive. Pre-bait with hemp and corn the evening before for best results.",
+            map: "https://www.google.com/maps/search/?api=1&query=Bewdley+Rice+Lake+Ontario",
+            imgs: ["rice lake ontario fishing boat","reeds lake shallow fishing ontario","large carp held fisherman lake"] },
+          { title: "St. Lawrence River – Prescott, Brockville & Kingston (3–4 hrs east)",
+            detail: "The St. Lawrence offers world-class carp fishing in its slow back channels, harbour edges, and around the Thousand Islands. Prescott Harbour and the Brockville waterfront are easy access points. Kingston's harbours and the Cataraqui River mouth are outstanding — sheltered, weedy, and lightly pressured. The combination of slow current, rich food supply, and warm summer shallows makes this a destination venue.",
+            map: "https://www.google.com/maps/search/?api=1&query=Prescott+Harbour+Waterfront+Ontario",
+            imgs: ["st lawrence river ontario fishing","kingston harbour ontario waterfront","thousand islands ontario summer river"] },
+          { title: "Ottawa River – Britannia Park & Rideau River (4.5–5 hrs east)",
+            detail: "The Ottawa River holds a large and largely unfished carp population in its slow back bays. Britannia Park on the Ottawa city side offers excellent shore access along wide calm margins. The Rideau River running through Ottawa is also productive, particularly below the Hogs Back Falls weir where carp congregate. Ontario Fishing Adventures runs guided carp trips here if you want to learn the water fast.",
+            map: "https://www.google.com/maps/search/?api=1&query=Britannia+Park+Ottawa+River+Ontario",
+            imgs: ["ottawa river ontario fishing bank","rideau river ottawa carp fishing","britannia park ottawa waterfront nature"] },
+          { title: "Lake St. Clair – Windsor & Tecumseh (4–4.5 hrs southwest)",
+            detail: "Lake St. Clair is widely considered Ontario's number-one carp destination. The water is shallow, warm, and incredibly fertile — fish averaging 18–25 lbs with genuine 30+ lb fish every season. Target the weed flats and channel margins along Lakeshore Road between Tecumseh and Belle River. Boat fishing is most effective, but Lakeview Park Marina and Sandpoint Beach produce well from shore. Boilies and tiger nuts outperform corn here.",
+            map: "https://www.google.com/maps/search/?api=1&query=Lakeview+Park+Marina+Windsor+Ontario",
+            imgs: ["lake st clair ontario windsor fishing","shallow weed flat fishing boat ontario","large trophy carp fishing ontario lake"] },
+        ]
+      },
+      {
+        id: "technique", icon: "⚙️", label: "Casting & Technique", color: "#1a6b8a",
+        intro: "Execution separates a good setup from a caught fish. Carp reward precision, patience, and attention to small details.",
+        videos: [
+          { id: "gZzKO0SHifo", label: "How to Cast a Carp Rod & Hit the Line Clip" },
+          { id: "jQgVrdCJPgs", label: "Cast with 100% Accuracy – Line Clip & Distance Sticks" },
+        ],
+        tips: [
+          { title: "Accuracy beats distance",
+            detail: "Cast to a specific spot — a lily pad edge, a gap in reeds, a visible feature — and hit it every time. Use a marker float to find depth and features first. Clip your line on the reel spool once you find the right distance, so every cast hits the same spot.",
+            imgs: ["fishing cast overhead rod arc","line clip reel fishing spool","marker float fishing lake depth"] },
+          { title: "Slack line after casting",
+            detail: "After casting, point your rod tip at the water and let out 30cm of slack. On a baitrunner, engage the freespool. This ensures the line lies flat — a taut line can pull your rig out of position and creates resistance that spooks cautious carp.",
+            imgs: ["fishing rod tip pointing water low","slack fishing line on water","rod positioned low water fishing"] },
+          { title: "Stealth at the bank",
+            detail: "Move slowly and quietly. Footsteps transmit through the ground into the water — carp feel low-frequency vibrations. Don't bang tackle boxes, talk loudly, or cast carelessly. In clear or pressured water, stay back from the bank edge and crouch when you can.",
+            imgs: ["angler crouching low bank fishing","quiet approach fishing bank still","fisherman hidden bank low profile"] },
+          { title: "Playing a carp",
+            detail: "When a run starts: disengage the baitrunner (turn the handle), lift the rod firmly to set the hook, then keep steady pressure — not a yank. Let the fish run when it wants to; use the drag to tire it. Steer it away from snags by lowering the rod sideways toward open water.",
+            imgs: ["angler fighting large fish rod bent","fishing rod bent strain big fish","carp angler playing fish reel"] },
+          { title: "Waiting and rebaiting",
+            detail: "Recast every 45–90 minutes if nothing happens — your bait may have been cleaned off by small fish, or the scent trail has dispersed. Before recasting, introduce another small handful of loose feed.",
+            imgs: ["fisherman waiting lake chair relaxed","angler sitting patient bank rods","casting bait hand throwing feed lake"] },
+          { title: "Catch & release care",
+            detail: "Wet your hands before handling carp. Use a large unhooking mat — never put them on bare ground. Remove hooks with forceps or a disgorger. Support the fish horizontally for photos; never hold by the lip. Return head-first, holding upright in the water until it kicks away.",
+            imgs: ["large carp held horizontal safely","unhooking mat fish care fishing","releasing fish back water gently"] },
+        ]
+      }
+    ];
+
+    const seasons = [
+      { season: "🌸 Spring (May–Jun)", rating: 5, note: "Best season — aggressive feeding" },
+      { season: "☀️ Summer (Jul–Aug)", rating: 3, note: "Early morning & night only" },
+      { season: "🍂 Autumn (Sep–Oct)", rating: 4, note: "Excellent pre-winter feeding" },
+      { season: "❄️ Winter (Nov–Apr)", rating: 1, note: "Very slow, warm spells only" },
+    ];
+    const baitTemps = [
+      { temp: "Below 10°C", baits: "Fishmeal, cheese, shrimp", bg: "#1a2a3a" },
+      { temp: "10–16°C",    baits: "Corn, boilies, worm",    bg: "#1a2d1a" },
+      { temp: "16–24°C",    baits: "All baits, fruity flavours", bg: "#2a2d0d" },
+      { temp: "Above 24°C", baits: "Surface bread, floaters", bg: "#2d1a0d" },
+    ];
+    const checklist = ["12ft carp rod","Baitrunner reel (4000–6000)","15lb mono line","Fluorocarbon leader (20lb)","Bank sticks x2","Bite alarms / bell","42\" landing net","Unhooking mat","Hook size 6 & 8","1.5–3oz leads","Hair rig components","Baiting needle","Forceps/disgorger"];
+
+    let imgSeed = 100;
+
+    function unsplashUrl(keyword) {
+      const seed = imgSeed++;
+      return `https://source.unsplash.com/featured/400x300/?${encodeURIComponent(keyword)}&sig=${seed}`;
+    }
+
+    function renderExtra(s) {
+      if (s.extra === "seasons") {
+        return `<div class="extra-panel"><h4>Ontario Season Rating</h4>
+          ${seasons.map(r => `
+            <div class="season-row">
+              <div class="season-name">${r.season}</div>
+              <div class="rating-bars">${[1,2,3,4,5].map(n=>`<div class="bar ${n<=r.rating?"on":"off"}"></div>`).join("")}</div>
+              <div class="season-note">${r.note}</div>
+            </div>`).join("")}
+        </div>`;
+      }
+      if (s.extra === "baittemp") {
+        return `<div class="extra-panel"><h4>Quick Bait Temperature Guide</h4>
+          <div class="temp-grid">
+            ${baitTemps.map(r=>`<div class="temp-card" style="background:${r.bg}"><div class="temp-label">${r.temp}</div><div class="temp-baits">${r.baits}</div></div>`).join("")}
+          </div></div>`;
+      }
+      if (s.extra === "checklist") {
+        return `<div class="extra-panel"><h4>Starter Kit Checklist</h4>
+          <div class="checklist">${checklist.map(item=>`<div class="check-pill">✓ ${item}</div>`).join("")}</div>
+        </div>`;
+      }
+      return "";
+    }
+
+    function buildContent() {
+      const content = document.getElementById("content");
+      content.innerHTML = sections.map((s, si) => {
+        const tipsHTML = s.tips.map((tip, i) => {
+          const imgsHTML = (tip.imgs || []).map(kw =>
+            `<img class="tip-img" src="${unsplashUrl(kw)}" alt="${kw}" loading="lazy" onerror="this.style.display='none'">`
+          ).join("");
+          return `
+            <div class="tip-card" style="border-left-color:${s.color}; border-color:${s.color}40">
+              <div class="tip-body">
+                <div class="tip-num" style="color:${s.color}">${String(i+1).padStart(2,"0")}</div>
+                <h3 class="tip-title">${tip.title}</h3>
+                <p class="tip-detail">${tip.detail}</p>
+                ${tip.map ? `<a class="tip-map-link" href="${tip.map}" target="_blank" rel="noopener">📍 View on Google Maps</a>` : ''}
+              </div>
+              ${imgsHTML ? `<div class="tip-images">${imgsHTML}</div>` : ""}
+            </div>`;
+        }).join("");
+
+        const videosHTML = s.videos && s.videos.length ? `
+          <div class="video-section">
+            <div class="video-section-header">▶ &nbsp;Related Video Tutorials — click to watch on YouTube</div>
+            <div class="video-grid">
+              ${s.videos.map(v => `
+                <a class="video-thumb" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">
+                  <div class="video-label">Tutorial</div>
+                  <div class="video-img-wrap">
+                    <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="${v.label}" loading="lazy">
+                    <div class="play-btn">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                  </div>
+                  <div class="video-title-bar"><span class="yt-badge">YT</span>${v.label}</div>
+                </a>`).join("")}
+            </div>
+          </div>` : "";
+
+        return `
+          <section class="fish-section" id="${s.id}">
+            <div class="section-header">
+              <div class="section-icon" style="background:${s.color}; box-shadow:0 4px 20px ${s.color}55">${s.icon}</div>
+              <div>
+                <div class="section-title">${s.label}</div>
+                <div class="section-intro">${s.intro}</div>
+              </div>
+            </div>
+            <div class="divider" style="background:linear-gradient(90deg,${s.color}88,transparent)"></div>
+            <div class="tips">${tipsHTML}</div>
+            ${videosHTML}
+            ${renderExtra(s)}
+          </section>
+          ${si < sections.length - 1 ? '<div class="section-break"></div>' : ''}`;
+      }).join("");
+    }
+
+    function buildNav() {
+      const nav = document.getElementById("nav");
+      nav.innerHTML = sections.map(s =>
+        `<a class="nav-btn" href="#${s.id}" data-id="${s.id}">${s.icon} ${s.label}</a>`
+      ).join("");
+
+      // Highlight nav link for whichever section is most visible
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            document.querySelectorAll(".nav-btn").forEach(b => {
+              b.classList.remove("active");
+              b.style.background = "";
+            });
+            const btn = nav.querySelector(`[data-id="${entry.target.id}"]`);
+            if (btn) {
+              btn.classList.add("active");
+              const sec = sections.find(x => x.id === entry.target.id);
+              if (sec) btn.style.background = sec.color;
+              btn.scrollIntoView({ block: "nearest", inline: "center" });
+            }
+          }
+        });
+      }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
+
+      document.querySelectorAll(".fish-section").forEach(el => observer.observe(el));
+    }
+
+    buildContent();
+    buildNav();
+  </script>
+</body>
+</html>
