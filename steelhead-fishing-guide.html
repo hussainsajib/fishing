@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Steelhead Fishing Guide – Ontario Waters</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #f5f7f4;
+      min-height: 100vh;
+      color: #1a2e1a;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #ede8f0 0%, #d8cce8 50%, #ede8f0 100%);
+      border-bottom: 2px solid #c4b4d4;
+      padding: 36px 24px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(123,45,139,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(26,107,138,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .header-icon { font-size: 42px; margin-bottom: 8px; }
+    .header h1 {
+      font-family: 'Georgia', serif;
+      font-size: clamp(22px, 5vw, 36px);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #2a1a3a;
+      margin: 0 0 8px;
+      text-shadow: 0 1px 8px rgba(123,45,139,0.15);
+    }
+    .header-sub {
+      font-size: 14px;
+      color: #7a5a8a;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: sans-serif;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      display: flex;
+      overflow-x: auto;
+      background: #fff;
+      border-bottom: 1px solid #d4e4d4;
+      padding: 0 8px;
+      gap: 2px;
+      scrollbar-width: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 6px rgba(45,90,45,0.08);
+    }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav-btn {
+      background: transparent;
+      color: #5a8a5a;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-family: sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      opacity: 0.8;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    .nav-btn.active {
+      color: #fff;
+      font-weight: 700;
+      opacity: 1;
+      border-bottom-color: rgba(0,0,0,0.15);
+    }
+
+    /* ── Content ── */
+    .content {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    /* ── Single-page layout ── */
+    .fish-section { padding-bottom: 16px; }
+    .section-break {
+      margin: 52px 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #c4b4d4, transparent);
+    }
+    .back-link {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      font-family: sans-serif;
+      font-size: 11px;
+      color: #7a5a8a;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      z-index: 1;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #7b2d8b; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .section-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a3320;
+      margin: 0 0 4px;
+      letter-spacing: 0.02em;
+    }
+    .section-intro {
+      font-family: sans-serif;
+      font-size: 13px;
+      color: #5a7a5a;
+      line-height: 1.5;
+    }
+    .divider {
+      height: 1px;
+      margin-bottom: 24px;
+    }
+
+    /* ── Tips ── */
+    .tips { display: flex; flex-direction: column; gap: 20px; }
+
+    .tip-card {
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      border-left-width: 3px;
+      border-left-style: solid;
+      border-top: 1px solid;
+      border-right: 1px solid;
+      border-bottom: 1px solid;
+      box-shadow: 0 1px 4px rgba(45,90,45,0.07);
+    }
+    .tip-body {
+      padding: 18px 20px 14px;
+      position: relative;
+    }
+    .tip-num {
+      position: absolute;
+      top: 16px; right: 16px;
+      font-family: sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0.6;
+      letter-spacing: 0.1em;
+    }
+    .tip-title {
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a3320;
+      margin: 0 0 8px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding-right: 36px;
+    }
+    .tip-detail {
+      font-family: Georgia, serif;
+      font-size: 14px;
+      color: #3a5a3a;
+      line-height: 1.75;
+    }
+    .tip-map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: #2d7a4f;
+      text-decoration: none;
+      border: 1px solid rgba(45,106,79,0.35);
+      border-radius: 20px;
+      padding: 5px 13px;
+      background: rgba(45,106,79,0.07);
+      transition: background 0.2s, color 0.2s;
+    }
+    .tip-map-link:hover {
+      background: rgba(45,106,79,0.15);
+      color: #1a5a35;
+    }
+
+    /* Image strip */
+    .tip-images {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px 16px;
+      flex-wrap: wrap;
+    }
+    .tip-img {
+      flex: 1 1 120px;
+      max-width: 220px;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: #edf2ed;
+      display: block;
+    }
+    @media (max-width: 480px) {
+      .tip-img { min-width: 90px; }
+    }
+
+    /* ── YouTube embed ── */
+    .video-section {
+      margin-top: 28px;
+      background: #fff;
+      border: 1px solid #d4e4d4;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .video-section-header {
+      padding: 13px 18px;
+      font-family: sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #5a8a5a;
+      border-bottom: 1px solid #e4f0e4;
+      background: #f5faf5;
+    }
+    .video-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 16px;
+    }
+    .video-thumb {
+      flex: 1 1 240px;
+      max-width: 380px;
+      text-decoration: none;
+      display: block;
+      cursor: pointer;
+    }
+    .video-thumb:hover .video-img-wrap { opacity: 0.85; }
+    .video-thumb:hover .play-btn { transform: translate(-50%,-50%) scale(1.12); }
+    .video-label {
+      font-family: sans-serif;
+      font-size: 11px;
+      color: #7aaa7a;
+      margin-bottom: 6px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .video-img-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #dceadc;
+      transition: opacity 0.2s;
+    }
+    .video-img-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 52px; height: 52px;
+      background: rgba(255,0,0,0.88);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.18s;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.25);
+    }
+    .play-btn svg { margin-left: 4px; }
+    .video-title-bar {
+      margin-top: 7px;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: #1a3320;
+      line-height: 1.4;
+    }
+    .yt-badge {
+      display: inline-block;
+      font-size: 10px;
+      background: #ff0000;
+      color: #fff;
+      border-radius: 3px;
+      padding: 1px 5px;
+      margin-right: 5px;
+      font-weight: 700;
+      vertical-align: middle;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Extra panels ── */
+    .extra-panel {
+      margin-top: 24px;
+      background: #fff;
+      border: 1px solid #d4e4d4;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .extra-panel h4 {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: #5a8a5a;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 0 14px;
+    }
+    .temp-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .temp-card { border-radius: 8px; padding: 12px 16px; flex: 1 1 160px; }
+    .temp-label { font-family: sans-serif; font-size: 11px; color: #5a8a6a; font-weight: 700; margin-bottom: 4px; }
+    .temp-baits { font-family: Georgia, serif; font-size: 13px; color: #2a4a2a; }
+    .season-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; }
+    .season-name { font-family: sans-serif; font-size: 13px; color: #1a3320; width: 180px; flex-shrink: 0; }
+    .rating-bars { display: flex; gap: 4px; }
+    .bar { width: 18px; height: 8px; border-radius: 3px; }
+    .bar.on  { background: #7b2d8b; }
+    .bar.off { background: #d4e4d4; }
+    .season-note { font-family: sans-serif; font-size: 12px; color: #5a7a5a; }
+    .checklist { display: flex; flex-wrap: wrap; gap: 8px; }
+    .check-pill {
+      background: #f0f7f0; border: 1px solid #c8e0c8; border-radius: 20px;
+      padding: 6px 14px; font-family: sans-serif; font-size: 12px; color: #3a6a3a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <a class="back-link" href="index.html">← All Fish Guides</a>
+    <div class="header-icon">🌊</div>
+    <h1>Complete Steelhead Fishing Guide</h1>
+    <p class="header-sub">Ontario Tributaries · From Setup to Strike</p>
+  </div>
+
+  <nav class="nav" id="nav"></nav>
+  <div class="content" id="content"></div>
+
+  <script>
+    const sections = [
+      {
+        id: "reading", icon: "👁️", label: "Reading the River", color: "#2d6a4f",
+        intro: "Steelhead don't spread out evenly through a river — they hold in specific lies. Learn to read water and you will find fish consistently, regardless of conditions.",
+        videos: [],
+        tips: [
+          { title: "Pools — the classic holding water",
+            detail: "A deep, slow pool behind a rapid or cascade is the archetypal steelhead lie. Fish rest here after pushing upstream through fast water. Focus on the deepest part and the far seam where fast water meets slow. In winter and cold conditions, fish hug the bottom — slow your presentation right down.",
+            imgs: ["river pool deep fishing calm water","fly fishing river pool drift","river bend deep pool autumn"] },
+          { title: "Current seams and edges",
+            detail: "Steelhead conserve energy by sitting just out of the main flow, at the boundary between fast and slow water. This 'seam' is often marked by a line of foam or debris on the surface. Cast to let your bait or fly drift naturally through and past the seam — fish strike as the presentation crosses into slower water.",
+            imgs: ["river current seam fishing line","fast slow water edge fishing","river seam foam line fishing"] },
+          { title: "Tailouts — the overlooked hotspot",
+            detail: "The shallow tail of a pool, where the water begins to speed up again, is prime holding water for steelhead — especially in low-light conditions. Fish move into tailouts at dawn and dusk to feed. Wade carefully: approaching from downstream spooks fish; work across from the bank.",
+            imgs: ["river tailout shallow fishing","shallow gravel tailout river run","fisherman river shallow riffle morning"] },
+          { title: "Boulder gardens and pocket water",
+            detail: "In rocky rivers like the Ganaraska Gorge or Nottawasaga headwaters, steelhead park in the slack pockets directly behind large boulders. These pockets are small — present your bait in a tight drift, often 1–2 metres long. Short-line drift or tight-lining are more effective here than a long float run.",
+            imgs: ["boulder river pocket water fishing","rocky river fishing boulders Ontario","fast river pocket water trout fishing"] },
+          { title: "Undercut banks and log jams",
+            detail: "Undercut banks provide shade, cover, and stillness — steelhead in pressured rivers like the Credit or Humber use these heavily. You will rarely see fish here from above; approach slowly parallel to the bank and feel for takes rather than watching a float. Use a single egg or spawn sac drifted along the undercut face.",
+            imgs: ["undercut bank river fishing trout","fallen log river fishing pool","shaded bank river trout fishing"] },
+          { title: "Water colour and visibility",
+            detail: "Steelhead runs peak in slightly coloured water — 1–2 feet of clarity after a rain event. Crystal-clear water makes fish ultra-spooky (longer leaders, smaller hooks, soft approach). Chocolate-brown blown-out water is unproductive. Aim for the 24–48 hour window as a river drops and clears after rain.",
+            imgs: ["river water colour slightly murky","coloured water river fishing spate","clear gin fishing river trout ontario"] },
+        ]
+      },
+      {
+        id: "timing", icon: "🕐", label: "Run Timing", color: "#b5451b",
+        intro: "Ontario steelhead run twice a year. Both runs offer spectacular sport — but they demand completely different tactics and timing windows.",
+        videos: [],
+        extra: "seasons",
+        tips: [
+          { title: "Fall run — October to November",
+            detail: "The fall run is triggered by dropping water temperatures and the first significant rain events of autumn. Lake Ontario tributaries like the Ganaraska, Credit, and Humber begin receiving fish from mid-October. Fish are fresh, bright, and aggressive — these are the most acrobatic steelhead of the year. Watch for water temperatures dropping below 14°C and the first rain that raises river levels. The peak window is typically the last two weeks of October into early November.",
+            imgs: ["autumn fall river steelhead fishing","october river fishing ontario tributaries","fall foliage river fishing rainbow trout"] },
+          { title: "Spring run — March to May",
+            detail: "Ice-out and rising water temperatures trigger the spring run beginning in late February on south-facing rivers and extending through May on cooler northern tributaries. Credit River and Humber begin running in March; the Ganaraska and Nottawasaga follow in April. Spring fish are often larger — some have overwintered in the river. Water levels are high and fast; heavier rigs are needed. The spawn itself happens in April–May on gravel redds in shallow, well-oxygenated runs.",
+            imgs: ["spring river fishing melt ice ontario","march april river steelhead Ontario","spring thaw river flooding high water"] },
+          { title: "Water temperature triggers",
+            detail: "Steelhead are most active between 4°C and 12°C. Below 4°C they become sluggish and feed minimally — slow your drift, fish the deepest lies. The sweet spot is 6–10°C: fish are in the system, moving, and feeding. Above 14°C they either return to the lake or seek cold tributary springs. Always carry a thermometer.",
+            imgs: ["river thermometer water temperature fishing","cold water river morning fishing trout","river temperature gauge fishing canada"] },
+          { title: "Rain and river height",
+            detail: "A significant rain event (25mm+) over 24 hours is the most reliable trigger for fresh fish entering the system. Monitor river gauge data (Water Survey of Canada) 24–48 hours after rain. A river 'on the drop' — falling after a peak — is the prime window. Fish move most freely when levels are dropping from a modest flood.",
+            imgs: ["rain river rise fishing ontario","river height gauge water flooding","rain fishing river spate trout run"] },
+          { title: "Time of day",
+            detail: "Low light is best — dawn for one to two hours, and again at dusk. In bright midday sun, steelhead retreat to the deepest pools and shut down. On overcast days, fishing can be good throughout. In the fall run, night fishing is productive on rivers where it is permitted — fish move freely in the dark.",
+            imgs: ["dawn river fishing mist morning trout","dusk riverside fishing evening calm","overcast cloudy river fishing steelhead"] },
+          { title: "Avoid freshets and blown-out conditions",
+            detail: "If a river is running brown and above its banks, it is unfishable and can be dangerous. Wait. A river in spate clears faster than you expect — a chocolate river at 7am is often fishable by afternoon. Check the Water Survey of Canada gauge for the river you plan to fish the evening before.",
+            imgs: ["flooded brown river unfishable high","river spate flood ontario rushing","muddy brown river after storm rain"] },
+        ]
+      },
+      {
+        id: "tackle", icon: "🎣", label: "Rod & Reel Setup", color: "#4a4e69",
+        intro: "Ontario steelheaders primarily use three methods: float fishing with a centerpin, float fishing with a spinning rod, and fly fishing. Each has strengths depending on the water type.",
+        videos: [],
+        extra: "checklist",
+        tips: [
+          { title: "Centerpin rod and reel (float fishing)",
+            detail: "The centerpin is the traditional Ontario steelhead method. A 13–15ft rod (Lamiglas, Daiwa, custom builds) pairs with a large-diameter centerpin reel that free-spools with zero resistance. This produces a perfectly natural, drag-free float drift far exceeding what a spinning reel can achieve. Spool with 8–12lb Maxima Ultragreen or Berkley Trilene. The learning curve is real — spend time casting and controlling the spool before you hit the river.",
+            imgs: ["centerpin reel large diameter fishing","long float rod centerpin steelhead","centerpin reel closeup spool fishing"] },
+          { title: "Spinning rod (versatile option)",
+            detail: "A 9–10ft, medium-light to medium action spinning rod (St. Croix Triumph, Okuma Celilo, Ugly Stik Elite) works excellently for float fishing and jig presentations. A 2500–3000 size spinning reel with 8–10lb fluorocarbon mainline or 10lb braid with a fluoro leader. Spinning is easier to learn than centerpin and handles a wider range of presentations. Use a quality spinning reel with a smooth drag — steelhead make long, fast runs.",
+            imgs: ["spinning rod reel fishing river trout","medium light spinning rod ontario river","steelhead spinning setup float fishing"] },
+          { title: "Fly rod",
+            detail: "A 9ft, 7–8 weight fly rod covers Ontario river fishing well. Euro nymphing rods (10–10.5ft, 3–4wt) are increasingly popular for tight-line nymphing in smaller rivers. Match with a quality reel with a reliable disc drag (Abel, Galvan, Lamson) loaded with running line and an intermediate or floating line. A 9ft 5X–6X fluorocarbon leader for nymphs; 0X–2X for streamers and egg patterns.",
+            imgs: ["fly fishing rod reel river trout Ontario","fly rod casting river autumn","fly fishing steelhead ontario tributary"] },
+          { title: "Waders and boots",
+            detail: "Non-negotiable. 4mm neoprene waders for fall/early spring when water is cold (2–8°C); lightweight breathable waders for late spring. Felt-soled wading boots provide excellent grip on algae-covered limestone bedrock (common in Ontario rivers) but are banned in some areas — check local regulations. Rubber-soled boots with tungsten studs are a reliable alternative. A wading staff adds safety on fast, rocky rivers.",
+            imgs: ["waders wading boots river fishing","wading river boots felt gravel","fisherman wading cold river spring"] },
+          { title: "Polarized sunglasses",
+            detail: "Polarized lenses cut glare and let you see into the water to spot fish, read structure, and see takes in clear conditions. Amber or copper lenses work best in Ontario's low-contrast overcast light. Quality matters — Costa, Smith, and Maui Jim are the standard. Cheap polarized glasses distort and fatigue the eye quickly.",
+            imgs: ["polarized sunglasses fishing river sight","amber lens sunglasses fishing bright","river sight fishing clear water polarized"] },
+          { title: "Landing net and gloves",
+            detail: "A rubber-mesh landing net with a deep bag (60cm minimum basket diameter) protects the fish's slime coat. Rubber mesh is mandatory under most Ontario catch-and-release guidelines. Neoprene gloves extend your cold-water comfort significantly — steelhead season runs February through November, and wet hands at 4°C become painful quickly.",
+            imgs: ["rubber mesh landing net large trout","neoprene gloves fishing cold water hands","landing steelhead net river bank"] },
+        ]
+      },
+      {
+        id: "rigs", icon: "🔗", label: "Rigs & Presentations", color: "#7b2d8b",
+        intro: "Getting a natural drift is everything in steelhead fishing. The fish can see every micro-drag in the current — your job is to make the bait look like it belongs in the flow.",
+        videos: [],
+        tips: [
+          { title: "Float / pencil float drift",
+            detail: "A pencil float set to depth (typically 1–1.5x the water depth) suspends split shot and a hook above the bottom. The float drifts downstream at the speed of the current — any deviation signals a fish. Rig: 6–10lb mainline → float → split shot arranged in decreasing size from float to hook → 12–18\" fluorocarbon leader → size 6–10 hook. The shot pattern controls depth and drift speed. For centerpin: let the float drift 15–20m downstream before mending and relaunching.",
+            imgs: ["pencil float fishing river drift steelhead","float rig setup fishing diagram line","drift float bobber river current"] },
+          { title: "Slip float (spinning rod)",
+            detail: "A slip float runs on the mainline with a bobber stop setting the depth. When a fish takes, the line slips freely through the float so there is no resistance felt. Use a spring-loaded or bead-stop on the line, then a plastic bead, then the float, then a barrel swivel. Below the swivel: 18–24\" fluorocarbon leader, split shot, and hook. Depth is set by sliding the bobber stop up or down the line.",
+            imgs: ["slip float bobber stop bead fishing rig","spinning slip float steelhead setup","river slip float technique ontario"] },
+          { title: "Bottom bouncing",
+            detail: "Used in faster, deeper water where floats are hard to control. Tie a three-way swivel, attach a dropper of 6–8lb line to a 1/4–3/4oz pencil sinker (designed to bounce over rocks without snagging), and a 18–24\" leader with hook and bait. Cast upstream at 45°, let it bounce along the bottom, and follow with the rod tip. A tick-tick feel through the rod is normal; a heavy stop is a fish.",
+            imgs: ["bottom bouncing rig sinker river steelhead","three way swivel rig diagram","pencil weight sinker snag resistant"] },
+          { title: "Jig under float",
+            detail: "A 1/16–1/8oz jig head with a marabou or rubber tail (pink, chartreuse, or white) fished under a pencil float is one of Ontario's most productive steelhead setups. The jig rides just above the bottom, pulsing in the current. No additional split shot needed — the jig itself provides the weight. Use a 6lb fluorocarbon leader, 16–20\" long. Works year-round but especially effective in cold water when fish are lethargic.",
+            imgs: ["marabou jig under float fishing river","pink chartreuse jig steelhead trout","jig fishing float river current cold"] },
+          { title: "Fly fishing: tight-line nymphing",
+            detail: "Euro nymphing (Czech/French/Spanish nymphing) involves fishing a weighted nymph with a high rod tip, direct contact to the fly, and no float. The angler 'leads' the fly at current speed. Incredibly effective in pockets and runs 3–6m from the angler. Indicator-style nymphing under a small foam indicator also works well in longer glides. For spring steelhead: bead-head hare's ear, psycho prince, squirmy wormy. For fall: egg patterns in orange, pink, and chartreuse.",
+            imgs: ["fly fishing nymphing river high stick","euro nymphing technique rod high","fly fishing river nymph drift cold water"] },
+          { title: "Fly fishing: streamer swinging",
+            detail: "Swinging a streamer (intruder, temple dog, or simple woolly bugger) across the current on a tight line produces explosive takes. Cast at 45° downstream, mend to slow the swing, and the fly arcs across the current. Takes feel like hitting a rock — lift the rod firmly. This is the most aesthetically traditional steelhead method. Best in moderate current, depth 1–2m.",
+            imgs: ["streamer fly swinging river steelhead","fly casting river downstream swing","intruder streamer fly fishing river"] },
+        ]
+      },
+      {
+        id: "bait", icon: "🎨", label: "Bait & Lures", color: "#c77b3a",
+        intro: "Steelhead are aggressive predators that react to both natural food triggers and visual/movement cues. Matching the right bait to conditions is the single biggest variable in success.",
+        videos: [],
+        extra: "baittemp",
+        tips: [
+          { title: "Spawn sacs (most effective natural bait)",
+            detail: "Tied from salmon or trout roe wrapped in mesh netting (spawn netting), spawn sacs are the top producing natural bait on Ontario rivers. Salmon egg sacs from Coho and Chinook are the traditional material, but cured steelhead or brown trout eggs also work. Tie sacs in sizes from a pea to a marble depending on water clarity — small in clear, larger in coloured water. Cure with Pro-Cure, BorX O Fire, or Fire Cure in orange, pink, or natural. Keep refrigerated.",
+            imgs: ["spawn sac fishing tied eggs pink","salmon roe spawn bag trout fishing","tied egg sac netting hook bait"] },
+          { title: "Egg beads",
+            detail: "Hard plastic or soft silicone beads (8–12mm) that imitate single salmon eggs. An incredibly effective and durable alternative to real roe — no preparation required. Thread the bead 2\" above a bare hook on the leader. Colour by condition: natural orange/amber in clear water; bright pink, chartreuse, or cerise in dirty/coloured water. Pautzke Eggs, Trout Beads, and Atlas Mike's are the main brands available in Ontario.",
+            imgs: ["egg bead fishing pink orange trout","round bead trout fishing tackle","artificial egg bead hook fishing steelhead"] },
+          { title: "Worms and nightcrawlers",
+            detail: "A single nightcrawler (half a crawler to avoid spin) is a legitimate steelhead bait, particularly in spring when water is cold and murky. Thread through the nose, leaving 2–3cm trailing. Particularly effective in the first 24–48 hours after a rain spate brings colour into a river. Less selective than roe — expect bonus walleye, bass, and suckers.",
+            imgs: ["nightcrawler worm fishing hook river","earthworm fishing hook trout close","worm bait freshwater fishing trout"] },
+          { title: "Jigs — marabou and rubber tails",
+            detail: "1/16 and 1/8oz jig heads with marabou, rabbit strip, or rubber paddle tails in pink, white, chartreuse, or black. Pink and white produce year-round; chartreuse excels in dirty water; black is underrated in clear low-light conditions. Fish under a float or on a tight line in pocket water. UV-treated marabou jigs give a real edge in stained conditions.",
+            imgs: ["marabou jig fishing pink white steelhead","rubber paddle tail jig fishing trout","jig head fishing pink lure river"] },
+          { title: "Fly patterns — eggs and nymphs",
+            detail: "Egg patterns (glo bugs, nuclear eggs, estaz eggs) in orange, flame, or chartreuse imitate the naturally occurring salmon and trout eggs drifting in fall and spring spawning rivers. Nymphs (hare's ear, pheasant tail, stonefly patterns, squirmy wormy) match the invertebrate food steelhead eat between aggression bouts. Both are fished on size 8–14 hooks. Tungsten bead heads get nymphs down fast in the cold, clear Ontario rivers.",
+            imgs: ["glo bug egg fly fishing orange","fly fishing egg pattern bead head","nymph fly fishing hook bead trout"] },
+          { title: "Small spoons and spinners",
+            detail: "When steelhead are actively running and in fast current, a 1/4oz Mepps #2 or Blue Fox spinner, or a small silver/gold spoon (Little Cleo, Krocodile), will trigger reaction strikes. Cast upstream, allow to sink, and retrieve just fast enough to activate the blade. Most effective in holding pools where you can work the whole water column. Less natural than drift fishing — best used to locate fish or when they stop responding to other presentations.",
+            imgs: ["silver spinner spoon fishing trout river","mepps spinner fishing lure silver","small spoon fishing trout river cast"] },
+        ]
+      },
+      {
+        id: "rivers", icon: "📍", label: "Ontario Rivers", color: "#1a6b8a",
+        intro: "Ontario's Lake Ontario and Georgian Bay tributaries support two major steelhead runs. Lake Ontario rivers are more accessible from the GTA; Georgian Bay rivers offer longer, wilder waters with less pressure.",
+        videos: [],
+        tips: [
+          { title: "Ganaraska River – Port Hope (1.5 hrs east of Toronto)",
+            detail: "The Ganaraska is Ontario's most famous steelhead river — the fall run turns Port Hope into a spectacle. Silver fish stack at the base of the falls on Walton Street before pushing through the gorge. The Conservation Authority manages most of the productive water; a conservation area permit is needed above the dam. Fish the <strong>Corbett's Dam pool</strong> in early season and the <strong>gorge runs</strong> as the season progresses. The river runs small — centerpin and spinning rods outperform fly rods in the tight gorge. Spring run extends through May. Heavily pressured during peak fall — arrive at dawn.",
+            map: "https://www.google.com/maps/search/?api=1&query=Ganaraska+River+Port+Hope+Ontario",
+            imgs: ["ganaraska river port hope ontario steelhead","gorge river canyon fishing ontario fall","river falls pool steelhead fishing ontario"] },
+          { title: "Credit River – Port Credit to Norval (30–50 min west of Toronto)",
+            detail: "One of Ontario's most accessible steelhead rivers, the Credit runs through Mississauga and Brampton before reaching Lake Ontario at Port Credit. The best steelhead water is between <strong>Norval</strong> and <strong>Streetsville</strong> — pools and runs between Erindale Park and the CA conservation sections hold fish through both runs. The <strong>Barbertown Road pool</strong> and the water near <strong>Meadowvale Conservation Area</strong> are well-known community spots. Credit River Anglers Association (CRAA) manages several private-access beats — membership is worth it. Spring fishing peaks in April; fall in October–November. Clear, low water makes stealth critical — long leaders, small flies.",
+            map: "https://www.google.com/maps/search/?api=1&query=Erindale+Park+Credit+River+Mississauga",
+            imgs: ["credit river fishing ontario steelhead run","river pool run fishing mississauga ontario","credit river valley fishing park ontario"] },
+          { title: "Humber River – Etienne Brule Park to Old Mill (Toronto — 20 min)",
+            detail: "The most urban steelhead venue in Ontario — fish within city limits. Steelhead push through the Humber Valley from the lake to the first major falls. <strong>Etienne Brule Park</strong> and the <strong>Old Mill area</strong> hold the most consistent runs. Access via the Humber Valley Trail and King's Mill Park on the east bank. Under TRCA catch-and-release rules for most of the river. Heavily pressured but productive — urban steelhead are educated fish; use 6–8lb fluorocarbon tippet and small presentations. The Humber Valley trail provides bank access for 10+ km upstream.",
+            map: "https://www.google.com/maps/search/?api=1&query=Etienne+Brule+Park+Humber+River+Toronto",
+            imgs: ["humber river toronto fall fishing steelhead","urban river valley fishing toronto humber","old mill humber river toronto park fishing"] },
+          { title: "16 Mile Creek – Oakville (40 min from Toronto)",
+            detail: "<strong>16 Mile Creek</strong> (also called Joshua's Creek) flows through Oakville into Lake Ontario. A relatively short river but excellent — some large steelhead for its size. <strong>Tannery Park</strong> and <strong>Lions Valley Park</strong> provide the best access to the lower productive pools. The Bronte Road bridge area is a popular launch point. The creek can be gin-clear in low water — use 6lb fluorocarbon and small presentations. Good spring and fall runs; more manageable crowds than the Credit or Humber.",
+            map: "https://www.google.com/maps/search/?api=1&query=Tannery+Park+16+Mile+Creek+Oakville+Ontario",
+            imgs: ["16 mile creek oakville fishing ontario","creek valley fishing ontario trail access","small river pool fall fishing steelhead"] },
+          { title: "Bronte Creek – Oakville / Burlington (40 min from Toronto)",
+            detail: "<strong>Bronte Creek</strong> offers productive steelhead fishing from the lake inlet upstream through <strong>Bronte Creek Provincial Park</strong>. The lower tidal section between the lake and the first falls receives the earliest fish in both runs. The provincial park contains kilometres of quality river with excellent trail access along both banks. A park entry fee applies. The river is limestone-bedded in sections — felt-soled wading highly recommended (check local regs). Quieter than the Credit and Humber on weekdays.",
+            map: "https://www.google.com/maps/search/?api=1&query=Bronte+Creek+Provincial+Park+Oakville+Ontario",
+            imgs: ["bronte creek provincial park fishing ontario","limestone bedrock river steelhead fishing","bronte creek river trail park ontario"] },
+          { title: "Nottawasaga River – Angus to Wasaga Beach (1.5 hrs north)",
+            detail: "The Nottawasaga drains into Georgian Bay (Lake Huron) and carries one of Ontario's best winter steelhead runs — fish arrive earlier than Lake Ontario tributaries and stay later into spring. Access the productive lower sections near <strong>Wasaga Beach</strong> and the <strong>Nottawasaga Inn Conservation Area</strong> near Angus. The river is wide, powerful, and demands heavier gear — 10–15lb leaders and 2–3oz floats. Access points at Edenvale Conservation Area and Duntroon Road. Snowmobiles on the ice provide unusual access to otherwise remote pools in deep winter.",
+            map: "https://www.google.com/maps/search/?api=1&query=Nottawasaga+River+Angus+Ontario",
+            imgs: ["nottawasaga river ontario fishing winter","georgian bay tributary river steelhead","wide river ontario fishing winter snow"] },
+          { title: "Beaver River – Thornbury (2 hrs north)",
+            detail: "The Beaver River runs into Georgian Bay at Thornbury. The <strong>Thornbury dam</strong> concentrates steelhead spectacularly — fish stack in the pool below waiting for the fish ladder. Polarized glasses let you sight-fish to individual steelhead from the road bridge. Above the dam the river opens into a long wadeable tailrace. Relatively light pressure compared to Lake Ontario rivers. A local favourite for fly fishers. Spring run extends through late May on this cooler north-shore river.",
+            map: "https://www.google.com/maps/search/?api=1&query=Thornbury+Dam+Beaver+River+Ontario",
+            imgs: ["thornbury dam beaver river ontario steelhead","dam pool steelhead congregation fishing","georgian bay river tributary thornbury fishing"] },
+          { title: "Bighead River – Meaford (2 hrs north)",
+            detail: "The Bighead River flows into Georgian Bay near Meaford. Less known than the Beaver but productive for both spring and fall steelhead. Access the lower river from Meaford Conservation Area and the town centre area. A smaller, more intimate river than the Nottawasaga — ideal for wading and precision drift fishing. Excellent for fly fishing when water is clear in spring.",
+            map: "https://www.google.com/maps/search/?api=1&query=Bighead+River+Meaford+Ontario",
+            imgs: ["bighead river meaford ontario fishing","small river tributary georgian bay steelhead","meaford ontario river trail fishing"] },
+          { title: "Saugeen River – Southampton (2.5 hrs northwest)",
+            detail: "The Saugeen drains into Lake Huron at Southampton and holds arguably the most powerful steelhead run in Ontario outside of Lake Ontario tributaries. The <strong>Southampton conservation area</strong> and the river below the Denny's Dam are the go-to sections. The Saugeen runs bigger and deeper than most Ontario rivers — 12–15lb leaders, large floats, and heavier jigs. The spring run peaks in April and often extends into May. Less pressure than GTA rivers on weekdays.",
+            map: "https://www.google.com/maps/search/?api=1&query=Saugeen+River+Southampton+Ontario",
+            imgs: ["saugeen river southampton ontario fishing","lake huron tributary river steelhead spring","saugeen river wide deep fishing ontario"] },
+          { title: "12 Mile Creek – St. Catharines (1.5 hrs from Toronto)",
+            detail: "A short but productive Lake Ontario tributary running through St. Catharines into Twelve Mile Creek Conservation Area. The lower sections near the lake receive early fall fish. Tight, tree-lined water — best fished with spinning or short centerpin presentation. Less crowded than the Credit or Ganaraska. Also receives Chinook and Coho salmon in fall, which brings steelhead in behind them to feed on drifting eggs.",
+            map: "https://www.google.com/maps/search/?api=1&query=12+Mile+Creek+St+Catharines+Ontario",
+            imgs: ["12 mile creek st catharines ontario fishing","small creek fall fishing ontario steelhead","niagara region creek river fishing ontario"] },
+        ]
+      },
+      {
+        id: "technique", icon: "⚙️", label: "Drift & Technique", color: "#2a5a8a",
+        intro: "Execution is everything. Steelhead will reject unnatural presentations on contact — the angler who gets the best drift catches the most fish.",
+        videos: [],
+        tips: [
+          { title: "The dead drift — the most important skill",
+            detail: "A dead drift means your bait moves at exactly the same speed as the current — no faster, no slower. Any drag (line moving faster than the float, or float moving faster than the current) is immediately visible to the fish. To achieve a dead drift: cast upstream of the target, immediately mend any bellying line, and follow the float downstream with the rod tip. On a centerpin, feather the spool to control line release. This skill takes practice but is the foundation of consistent steelhead fishing.",
+            imgs: ["float fishing dead drift river technique","mending line fishing river current upstream","centerpin float drift steelhead river"] },
+          { title: "Mending line — kill the drag",
+            detail: "After casting a float rig, the main line downstream of the float creates a 'belly' in the current that will drag the float and bait unnaturally. Immediately after each cast, flip 1–2m of line upstream (upstream mend) to counteract this. On fast current, you may need to mend multiple times per drift. A clean upstream mend adds 3–5 seconds of natural drift — enough time to trigger a hesitant fish.",
+            imgs: ["mending line fly fishing river technique","upstream mend fishing rod tip flip","fly fisherman mending line river current"] },
+          { title: "Setting the hook on a float take",
+            detail: "When the float disappears or is pulled sharply sideways, lift the rod firmly with a swift upward motion — not a sideways strike. The lift drives the hook into the fish's jaw. In a downstream position, a strong lift is needed; if you are upstream of the fish, a sideways strip-set or firm lift is equally effective. Do not strike at small bobbles — steelhead often bump the bait before committing; wait for a positive take.",
+            imgs: ["fishing hook set rod lift trout river","angler striking fish rod lift bend","float dip take fishing rod reaction"] },
+          { title: "Playing a steelhead — let it run",
+            detail: "Steelhead are explosive fighters — the first run can strip 30–50m of line in seconds. Keep steady pressure but do not try to stop the run with the drag alone; lower the rod angle slightly on runs to reduce risk of a break. Once the fish tires, recover line steadily. Steelhead jump repeatedly — lower the rod tip (bow to the fish) when it leaves the water to reduce tension and prevent hook pulls. Steer the fish away from snags with side pressure.",
+            imgs: ["angler fighting steelhead river bent rod","rainbow trout jumping river fight fish","trout fighting rod bent river fishing"] },
+          { title: "Wading approach — stealth first",
+            detail: "Steelhead are extremely sensitive to vibration. Wade slowly — every footstep sends a pressure wave ahead of you. Approach runs from the bank side or from well downstream before entering the water. In clear water, keep a low profile and wear dull clothing. Never wade into the run you plan to fish — approach from the tail and work upstream. Patience and slow movement will put more fish in the net than any bait choice.",
+            imgs: ["fisherman wading slowly river stealth","careful wading approach trout river","river wader slow approach fishing steelhead"] },
+          { title: "Catch and release — protecting the run",
+            detail: "Most Ontario steelhead rivers operate under catch-and-release or very restrictive harvest rules. Keep fish in the water as much as possible. Use barbless or pinched-barb hooks — steelhead must be de-hooked in the water. If a photo is necessary, wet your hands, lift horizontally for under 10 seconds, and return immediately. Hold the fish upright in the current until it kicks away. A fish that has been fought for more than 5 minutes in warm water (above 12°C) is at elevated mortality risk — release immediately and revive carefully.",
+            imgs: ["catch release steelhead held river water","reviving trout river current hands","rainbow trout release underwater water"] },
+        ]
+      }
+    ];
+
+    const seasons = [
+      { season: "🌸 Spring Run (Mar–May)", rating: 5, note: "Excellent — large fish, high water" },
+      { season: "☀️ Summer (Jun–Aug)",      rating: 1, note: "Virtually no fish — post-spawn return" },
+      { season: "🍂 Fall Run (Oct–Nov)",    rating: 5, note: "Best — fresh, bright, aggressive fish" },
+      { season: "❄️ Winter (Dec–Feb)",      rating: 2, note: "Slow but possible — Georgian Bay rivers" },
+    ];
+    const baitTemps = [
+      { temp: "Below 4°C",  baits: "Spawn sacs, small jigs (slow drift)", bg: "#e8f0f8" },
+      { temp: "4–8°C",      baits: "Spawn sacs, egg beads, nymphs",       bg: "#e8eef8" },
+      { temp: "8–12°C",     baits: "All baits — prime steelhead temp",    bg: "#e8f5e8" },
+      { temp: "Above 12°C", baits: "Spinners, streamers; fish go deep",   bg: "#fdf0e8" },
+    ];
+    const checklist = [
+      "9–10ft spinning rod or 13–15ft centerpin",
+      "Centerpin or spinning reel (2500–4000)",
+      "8–10lb monofilament mainline",
+      "6–8lb fluorocarbon tippet/leader",
+      "Pencil floats (sizes 3–8g)",
+      "Split shot assortment (BB, AAA)",
+      "Hooks size 6–10 (Gamakatsu, Owner)",
+      "Spawn sacs or egg beads",
+      "Marabou jigs 1/16–1/8oz (pink, white)",
+      "Waders + wading boots",
+      "Wading staff",
+      "Polarized sunglasses",
+      "Rubber-mesh landing net",
+      "Forceps / disgorger",
+      "Ontario fishing licence",
+    ];
+
+    let imgSeed = 100;
+
+    function unsplashUrl(keyword) {
+      const seed = imgSeed++;
+      return `https://source.unsplash.com/featured/400x300/?${encodeURIComponent(keyword)}&sig=${seed}`;
+    }
+
+    function renderExtra(s) {
+      if (s.extra === "seasons") {
+        return `<div class="extra-panel"><h4>Ontario Season Rating</h4>
+          ${seasons.map(r => `
+            <div class="season-row">
+              <div class="season-name">${r.season}</div>
+              <div class="rating-bars">${[1,2,3,4,5].map(n=>`<div class="bar ${n<=r.rating?"on":"off"}"></div>`).join("")}</div>
+              <div class="season-note">${r.note}</div>
+            </div>`).join("")}
+        </div>`;
+      }
+      if (s.extra === "baittemp") {
+        return `<div class="extra-panel"><h4>Quick Bait Temperature Guide</h4>
+          <div class="temp-grid">
+            ${baitTemps.map(r=>`<div class="temp-card" style="background:${r.bg}"><div class="temp-label">${r.temp}</div><div class="temp-baits">${r.baits}</div></div>`).join("")}
+          </div></div>`;
+      }
+      if (s.extra === "checklist") {
+        return `<div class="extra-panel"><h4>Starter Kit Checklist</h4>
+          <div class="checklist">${checklist.map(item=>`<div class="check-pill">✓ ${item}</div>`).join("")}</div>
+        </div>`;
+      }
+      return "";
+    }
+
+    function buildContent() {
+      const content = document.getElementById("content");
+      content.innerHTML = sections.map((s, si) => {
+        const tipsHTML = s.tips.map((tip, i) => {
+          const imgsHTML = (tip.imgs || []).map(kw =>
+            `<img class="tip-img" src="${unsplashUrl(kw)}" alt="${kw}" loading="lazy" onerror="this.style.display='none'">`
+          ).join("");
+          return `
+            <div class="tip-card" style="border-left-color:${s.color}; border-color:${s.color}40">
+              <div class="tip-body">
+                <div class="tip-num" style="color:${s.color}">${String(i+1).padStart(2,"0")}</div>
+                <h3 class="tip-title">${tip.title}</h3>
+                <p class="tip-detail">${tip.detail}</p>
+                ${tip.map ? `<a class="tip-map-link" href="${tip.map}" target="_blank" rel="noopener">📍 View on Google Maps</a>` : ''}
+              </div>
+              ${imgsHTML ? `<div class="tip-images">${imgsHTML}</div>` : ""}
+            </div>`;
+        }).join("");
+
+        const videosHTML = s.videos && s.videos.length ? `
+          <div class="video-section">
+            <div class="video-section-header">▶ &nbsp;Related Video Tutorials — click to watch on YouTube</div>
+            <div class="video-grid">
+              ${s.videos.map(v => `
+                <a class="video-thumb" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">
+                  <div class="video-label">Tutorial</div>
+                  <div class="video-img-wrap">
+                    <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="${v.label}" loading="lazy">
+                    <div class="play-btn">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                  </div>
+                  <div class="video-title-bar"><span class="yt-badge">YT</span>${v.label}</div>
+                </a>`).join("")}
+            </div>
+          </div>` : "";
+
+        return `
+          <section class="fish-section" id="${s.id}">
+            <div class="section-header">
+              <div class="section-icon" style="background:${s.color}; box-shadow:0 4px 20px ${s.color}55">${s.icon}</div>
+              <div>
+                <div class="section-title">${s.label}</div>
+                <div class="section-intro">${s.intro}</div>
+              </div>
+            </div>
+            <div class="divider" style="background:linear-gradient(90deg,${s.color}88,transparent)"></div>
+            <div class="tips">${tipsHTML}</div>
+            ${videosHTML}
+            ${renderExtra(s)}
+          </section>
+          ${si < sections.length - 1 ? '<div class="section-break"></div>' : ''}`;
+      }).join("");
+    }
+
+    function buildNav() {
+      const nav = document.getElementById("nav");
+      nav.innerHTML = sections.map(s =>
+        `<a class="nav-btn" href="#${s.id}" data-id="${s.id}">${s.icon} ${s.label}</a>`
+      ).join("");
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            document.querySelectorAll(".nav-btn").forEach(b => {
+              b.classList.remove("active");
+              b.style.background = "";
+            });
+            const btn = nav.querySelector(`[data-id="${entry.target.id}"]`);
+            if (btn) {
+              btn.classList.add("active");
+              const sec = sections.find(x => x.id === entry.target.id);
+              if (sec) btn.style.background = sec.color;
+              btn.scrollIntoView({ block: "nearest", inline: "center" });
+            }
+          }
+        });
+      }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
+
+      document.querySelectorAll(".fish-section").forEach(el => observer.observe(el));
+    }
+
+    buildContent();
+    buildNav();
+  </script>
+</body>
+</html>
